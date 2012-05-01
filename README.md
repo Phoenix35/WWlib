@@ -8,4 +8,3 @@ Some lazy Web Workers library
 * Released under GNU/GPL License
 
 Feel free to copy and use at will, but please mention the author.
-
