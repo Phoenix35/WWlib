@@ -17,10 +17,12 @@ var workers = new ww([script_1_URI[, ...]]);
 ```
 `workers` is the global object containing every Web Workers
 
+
 ## Accessing a worker
 ``` javascript
 workers[script_1_URI];
 ```
+
 
 ## Methods
 
