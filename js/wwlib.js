@@ -1,5 +1,7 @@
 (function (window) {
 
+window.idadd = 0;
+
 var ww = (function() {
 
 var ww = function() {
@@ -9,8 +11,6 @@ var ww = function() {
 ww.fn = ww.prototype = {
     constructor: ww,
 
-    FILE_CHECK: false,
-
     init: function(scripts) {
         for(var i in scripts)
             if(scripts.hasOwnProperty(i))
@@ -18,7 +18,7 @@ ww.fn = ww.prototype = {
 
         return this;
     },
-
+    
     add: function (scriptURI) {
         if(typeof scriptURI !== "string")
             throw new this.error(scriptURI+ " must be a string.");
@@ -27,13 +27,32 @@ ww.fn = ww.prototype = {
         if(/^(?:data|javascript(?=:))/.test(scriptURI))
             throw new this.error("Spec disallows data: and javascript: URLs");
         
-        console.group();
-        console.log("Loading " +scriptURI);
-        var worker = new Worker(scriptURI);
+        // Increment number of global workers. Easier for id recognition
+        this.idadd = ++window.idadd;
+        
+        console.groupCollapsed("#" +this.idadd+ " " +scriptURI);
+        console.log("Downloading...");
+        console.time(scriptURI);
+        
         // Creating one worker per script is not necessarily wanted
         // TODO: Change -_-
+        worker = new Worker(scriptURI);
+        
+        worker.id = this.idadd;
+        worker.send = function (data) {
+            
+        }
+        // bind allows to display the right id of the Worker
+        worker.kill = (function() {
+            console.log("Worker #" +this.id+ " terminated at " +new Date().toTimeString());
+            worker.terminate();
+        }).bind(worker);
+        
+        this[scriptURI] = worker;
+        
         console.log(scriptURI+ " downloaded.");
-        console.warn('It may have silently failed though, sorry!');
+        console.timeEnd(scriptURI);
+        console.warn("Because Web Workers fails SILENTLY if path is invalid, check for any network error.");
         console.groupEnd();
         
         return worker;

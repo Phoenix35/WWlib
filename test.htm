@@ -6,8 +6,19 @@
         window.addEventListener("load",
         function() {
             try {
-                var myWorker = new ww("script1.js", "script.js");
-                myWorker.add("lol.js");
+                var workers = new ww();
+                var workers2 = new ww("tr");
+                workers.add('script1.js');
+                workers.add('script2.js');
+                workers["script1.js"].postMessage('TROLOOOOOL');
+                workers['script1.js'].addEventListener('message', function(e) {
+                    alert(e.data);
+                }, false);
+                window.setTimeout(function() {
+                    console.log('\n');
+                    console.log("I'm terminating script1.js...");
+                    workers["script1.js"].kill();
+                }, 3000);
             }
             catch(e) {
                 console.log(e);
