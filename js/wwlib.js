@@ -48,7 +48,7 @@ ww.fn = ww.prototype = {
             worker.terminate();
         }).bind(worker);
         
-        this[scriptURI] = worker;
+        this[scriptURI] = this[worker.id] = worker;
         
         console.log(scriptURI+ " downloaded.");
         console.timeEnd(scriptURI);

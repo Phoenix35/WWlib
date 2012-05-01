@@ -22,7 +22,11 @@ var workers = new ww([script_1_URI[, ...]]);
 ``` javascript
 workers[script_1_URI];
 ```
-
+or
+``` javascript
+workers[worker_id];
+```
+Look at console to know which worker has which id
 
 ## Methods
 
