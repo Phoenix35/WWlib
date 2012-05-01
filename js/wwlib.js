@@ -35,6 +35,8 @@ ww.fn = ww.prototype = {
         console.log(scriptURI+ " downloaded.");
         console.warn('It may have silently failed though, sorry!');
         console.groupEnd();
+        
+        return worker;
     },
 
     error: function (message) {
