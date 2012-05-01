@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="js/wwlib.js"></script>
+    <script type="text/javascript">
+        window.addEventListener("load",
+        function() {
+            try {
+                var myWorker = new ww("script1.js", "script.js");
+                myWorker.add("lol.js");
+            }
+            catch(e) {
+                console.log(e);
+            }
+        }, false);
+    </script>
+</head>
+<body>
+</body>
+</html>
